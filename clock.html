@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            background: #252526;
+            color: rgb(47, 120, 47);
+            font-family: 'Courier New', monospace;
+            font-size: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #clock {
+            text-shadow: 0 0 20px rgb(146, 191, 146);
+        }
+
+        #date {
+            font-size: 24px;
+            color: rgb(182, 225, 182);
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgb(255, 255, 255);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock-container">
+    <div id="clock">Loading time...</div>
+    <div id="date">Loading date...</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const isAM = hours < 12;
+
+            // Convert to 12-hour format
+            hours = hours % 12 || 12;
+
+            // Format with leading zeros
+            const formattedTime = [
+                hours.toString().padStart(2, '0'),
+                minutes.toString().padStart(2, '0'),
+                seconds.toString().padStart(2, '0')
+            ].join(':') + (isAM ? ' AM' : ' PM');
+
+            document.getElementById('clock').textContent = formattedTime;
+
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString(undefined, dateOptions);
+
+            document.getElementById('date').textContent = formattedDate;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call  </script>
+</body>
+
+</html>
